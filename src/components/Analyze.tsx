@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { codeLabel } from "../lib/codes";
 import type { AiMode, Brand, ContentLang, HookOption, Reel, RetentionPoint, RetentionSource, Take } from "../types";
 import { interpolate } from "../lib/retention";
 import { lintHook, syllables, type HookLint } from "../lib/lint";
@@ -7,10 +8,11 @@ import { useFrames } from "../lib/useFrames";
 import { savedHooks } from "../data/saved-run";
 import { estimateWords, renderAvailable, renderNewHook, type RenderResult } from "../lib/render";
 import { Check, Copy, Cross, Pause, Play, Spark } from "./Icons";
+import { Progress, useSteps } from "./Progress";
 
 // Chart geometry (SVG user units). Colours mirror the CSS tokens.
 const W = 900, PL = 40, PR = 12, TOP = 12, H = 190;
-const C = { ink: "#E9E6F5", drop: "#FF6B5E", dropTint: "rgba(255,107,94,0.16)", data: "#8E51FF", dataInk: "#A684FF" };
+const C = { ink: "#1B1B1F", drop: "#E5484D", dropTint: "rgba(229,72,77,0.09)", data: "#FF5A1F", dataInk: "#16A34A" };
 
 // One rule for every time on screen: m:ss, floored, like a video timecode.
 export const fmt = (t: number) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
@@ -30,6 +32,9 @@ type Props = {
 
 export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, takes, onOpenTake, toast }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  // A clean copy of the reel (no burned-in captions) plays on top while the new hook is shown.
+  const cleanRef = useRef<HTMLVideoElement>(null);
+  const cleanUrl = reel.videoUrl.replace(/\.mp4$/, "-clean.mp4");
   const [time, setTime] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [paceMul, setPaceMul] = useState(1);
@@ -52,6 +57,8 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
   const [result, setResult] = useState<(RenderResult & { hook: string }) | null>(null);
   const [renderErr, setRenderErr] = useState<string | null>(null);
   const resultRef = useRef<HTMLElement>(null);
+  const rprog = useSteps();
+  const hprog = useSteps();
   const beforeRef = useRef<HTMLVideoElement>(null);
   const afterRef = useRef<HTMLVideoElement>(null);
   useEffect(() => { renderAvailable().then(setRenderInfo); }, []);
@@ -74,7 +81,7 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
     ? (ownLint ? { text: own.trim(), lint: ownLint } : null)
     : options[picked] ? { text: options[picked].text, lint: lints[picked] } : null;
 
-  const frames = useFrames(reel.videoUrl, reel.beats.map((b) => Math.min(b.end - 0.2, b.start + (b.end - b.start) * 0.55)));
+  const frames = useFrames(cleanUrl, reel.beats.map((b) => Math.min(b.end - 0.2, b.start + (b.end - b.start) * 0.55)));
   const dropBeat = dropAt == null ? null : reel.beats.find((b) => dropAt >= b.start && dropAt < b.end) ?? null;
   const nowBeat = reel.beats.find((b) => time >= b.start && time < b.end) ?? reel.beats[reel.beats.length - 1];
 
@@ -82,16 +89,18 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
   useEffect(() => {
     let raf = 0;
     const tick = () => {
-      const v = videoRef.current;
-      if (v) {
-        setTime(v.currentTime);
-        if (preview?.phase === "hook" && v.currentTime >= preview.landsAt + 0.45) {
+      const v = videoRef.current, c = cleanRef.current;
+      if (v && c && preview?.phase === "hook") {
+        setTime(c.currentTime);
+        if (c.currentTime >= preview.landsAt + 0.45) {
+          c.pause();
           v.currentTime = b2.start;
           v.muted = false;
+          v.play().catch(() => null);
           setPreview((p) => (p ? { ...p, phase: "rest" } : p));
           setPreviewed(true);
         }
-      }
+      } else if (v) setTime(v.currentTime);
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -102,7 +111,7 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
     const v = videoRef.current;
     if (!v) return;
     setSeen(true);
-    if (preview) { setPreview(null); v.muted = false; }
+    if (preview) { setPreview(null); v.muted = false; cleanRef.current?.pause(); }
     v.currentTime = Math.max(0, Math.min(reel.duration - 0.05, t));
     setTime(v.currentTime);
   };
@@ -116,22 +125,27 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
   };
 
   const startPreview = () => {
-    const v = videoRef.current;
-    if (!v || !chosen) return;
-    v.muted = true;
-    v.currentTime = 0;
+    const v = videoRef.current, c = cleanRef.current;
+    if (!v || !c || !chosen) return;
+    v.pause();
+    c.currentTime = 0;
     setPreview({ text: chosen.text, landsAt: chosen.lint.landsAt, phase: "hook" });
-    v.play().catch(() => toast("The browser blocked playback. Click Preview again.", true));
+    c.play().catch(() => toast("The browser blocked playback. Click Preview again.", true));
   };
 
   const askClaude = async () => {
     setBusy(true);
     setAiErr(null);
+    hprog.reset([{ id: "send", label: `Sending the hook, the drop and the next beat to ${currentEngine()?.label ?? "the AI"}` }, { id: "write", label: "Writing 4 shorter hooks" }, { id: "lint", label: "Timing them at your voice-over pace" }]);
+    hprog.update("send", "done", `drop at ${dropAt != null ? fmt(dropAt) : "—"}, old hook ${hookEnd.toFixed(1)} s`);
+    hprog.update("write", "now");
     try {
       const hooks = await generateHooks(aiMode, {
         task: "hooks", language: lang, brand: { ...brand, voicePace: pace }, idea: `${brand.name} reel "${reel.title}"`,
         currentHook: hookText, landsAt: hookEnd, dropAt, nextBeat: b2.line,
       });
+      hprog.update("write", "done", `${hooks.length} hooks`);
+      hprog.update("lint", "done", `${hooks.filter((h) => lintHook(h.text, { pace, dropAt }).landsAt <= 2.5).length} of ${hooks.length} land before 2.5 s`);
       setOptions(hooks);
       setOptSource("live");
       pick(0);
@@ -147,9 +161,15 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
     setRenderErr(null);
     setResult(null);
     try {
+      setRendering("working");
+      rprog.reset([
+        ...(renderInfo.voice ? [{ id: "voice", label: `Record the new hook (${renderInfo.voice})` }] : []),
+        { id: "captions", label: "Draw the word-by-word captions" },
+        { id: "cut", label: "Cut the new version" },
+      ]);
       const out = await renderNewHook({
         text: chosen.text, withVoice: Boolean(renderInfo.voice), cutTo: b2.start, duration: reel.duration,
-        estimate: () => estimateWords(chosen.text, pace, syllables), onStage: setRendering,
+        estimate: () => estimateWords(chosen.text, pace, syllables), onStep: (id, st, d) => rprog.update(id, st, d),
       });
       setResult({ ...out, hook: chosen.text });
       setPreviewed(true);
@@ -247,7 +267,7 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
             <span className="lbl">Beats from the render's own VO timing</span>
           </div>
 
-          <div className="scrollx">
+          <div className="scrollx" data-tour="strip">
             <div className="inner">
               <div className="strip-wrap" style={{ paddingLeft: `${(PL / W) * 100}%`, paddingRight: `${(PR / W) * 100}%` }}>
                 {dropBeat && (
@@ -261,7 +281,7 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
                       className={`pn${b === dropBeat ? " drop" : ""}${b === nowBeat ? " now" : ""}`}
                       style={{ flex: `${b.end - b.start} 1 0`, padding: 0, font: "inherit", textAlign: "left" }}
                       onClick={() => seek(b.start + 0.01)} title={`${b.id} ${fmt(b.start)}–${fmt(b.end)}: ${b.line}`}>
-                      <div className="fr">{frames[i] && <img src={frames[i]!} alt="" />}</div>
+                      <div className={`fr${frames[i] ? "" : " loading"}`}>{frames[i] && <img src={frames[i]!} alt="" />}</div>
                       <div className="cap">
                         <i>{b.id} {fmt(b.start)}–{fmt(b.end)}</i>{b.label}
                       </div>
@@ -274,25 +294,26 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
                 aria-label={`Retention: ${retention.map((p) => `${p.pct}% at ${p.t} s`).join(", ")}`}
                 onPointerDown={onChartPointer} onPointerMove={onChartPointer}>
                 <defs>
-                  <pattern id="ht" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(15)">
-                    <circle cx="3" cy="3" r="1.7" fill={C.data} />
-                  </pattern>
+                  <linearGradient id="ht" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stopColor={C.data} stopOpacity="0.26" />
+                    <stop offset="1" stopColor={C.data} stopOpacity="0.02" />
+                  </linearGradient>
                 </defs>
                 {dropAt != null && dropAt < hookEnd && (
                   <rect x={x(dropAt)} y={TOP} width={x(hookEnd) - x(dropAt)} height={H} fill={C.dropTint} />
                 )}
-                <g stroke={C.ink} strokeOpacity=".14">
+                <g stroke={C.ink} strokeOpacity=".08">
                   {[25, 50, 75].map((p) => <line key={p} x1={PL} x2={W - PR} y1={y(p)} y2={y(p)} />)}
                 </g>
-                <g stroke={C.ink} strokeOpacity=".28" strokeDasharray="2 3">
+                <g stroke={C.ink} strokeOpacity=".18" strokeDasharray="2 3">
                   {reel.beats.slice(1).map((b) => <line key={b.id} x1={x(b.start)} x2={x(b.start)} y1={TOP} y2={TOP + H} />)}
                 </g>
-                <path d={area} fill="url(#ht)" opacity=".9" />
-                <polyline points={curve.join(" ")} fill="none" stroke={C.ink} strokeWidth="2.2"
+                <path d={area} fill="url(#ht)" />
+                <polyline points={curve.join(" ")} fill="none" stroke={C.data} strokeWidth="3" strokeLinejoin="round"
                   strokeDasharray={source.kind === "reported" ? "6 4" : undefined} />
                 {source.kind === "reported" && retention.map((p) => (
                   <g key={p.t}>
-                    <circle cx={x(p.t)} cy={y(p.pct)} r="5" fill={C.ink} />
+                    <circle cx={x(p.t)} cy={y(p.pct)} r="5.5" fill={C.data} stroke="#fff" strokeWidth="2" />
                     {p.t > 0 && <text className="lab" x={x(p.t) + 9} y={y(p.pct) - 9}>{p.t < hookEnd ? `${p.pct}%` : `${p.pct}% at ${fmt(p.t)}`}</text>}
                   </g>
                 ))}
@@ -303,14 +324,14 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
                   <>
                     <line x1={x(chosen.lint.landsAt)} x2={x(chosen.lint.landsAt)} y1={TOP + 22} y2={TOP + H} stroke={C.dataInk} strokeWidth="2.5" />
                     <text className="lab" x={x(hookEnd) + 6} y={TOP + 32} style={{ fill: C.dataInk }}>
-                      New hook lands ≈ {chosen.lint.landsAt} s (blue line)
+                      New hook lands ≈ {chosen.lint.landsAt} s (green line)
                     </text>
                   </>
                 )}
                 {dropAt != null && (
                   <>
                     <line x1={x(dropAt)} x2={x(dropAt)} y1={TOP} y2={TOP + H} stroke={C.drop} strokeWidth="2" />
-                    <rect x={x(dropAt) + 4} y={TOP + H - 30} width="178" height="22" rx="4" fill={C.drop} />
+                    <rect x={x(dropAt) + 4} y={TOP + H - 30} width="178" height="22" rx="11" fill={C.drop} />
                     <text className="tag" x={x(dropAt) + 12} y={TOP + H - 15}>Biggest drop {fmt(dropAt)} ({source.kind === "reported" ? "FB" : "export"})</text>
                   </>
                 )}
@@ -348,15 +369,15 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
         </section>
 
         <aside className="side" aria-label="Hook rewrite">
-          <div className={`player${preview ? " big" : ""}`}>
+          <div className={`player panel${preview ? " big" : ""}`} data-tour="player">
             <div className="screen">
               <video ref={videoRef} src={reel.videoUrl} playsInline preload="auto"
                 onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
                 onEnded={() => { setPlaying(false); setPreview(null); if (videoRef.current) videoRef.current.muted = false; }} />
               {preview && <span className="badge">{preview.phase === "hook" ? "New hook" : `Original from ${b2.id}`}</span>}
-              {preview?.phase === "hook" && <div className="mask top" aria-hidden="true" />}
+              <video ref={cleanRef} src={cleanUrl} className={`clean${preview?.phase === "hook" ? " on" : ""}`} muted playsInline preload="auto" aria-hidden="true" />
               {reveal && (
-                <div className="mask cap">
+                <div className="say-wrap">
                   <span className="say" key={reveal.length}>{reveal.map((w, i) => i === reveal.length - 1 ? <b key={i}>{w}</b> : `${w} `)}</span>
                 </div>
               )}
@@ -369,6 +390,7 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
             </div>
           </div>
 
+          <section className="panel hookpanel" data-tour="hooks">
           <div>
             <div className="sec-bar" style={{ marginBottom: 4 }}><h2>Hook rewrite</h2><span className="lbl">{b1.id} · {fmt(b1.start)}–{fmt(b1.end)}</span></div>
             <p className="cur">“{hookText}”</p>
@@ -390,6 +412,7 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
               </button>
             </div>
             {aiErr && <p className="err">{aiErr} The saved run is still here.</p>}
+            {busy && <Progress steps={hprog.steps} />}
             <div className={`opts${step === 2 ? " cue" : ""}`} role="radiogroup" aria-label="Hook options">
               {options.map((o, i) => (
                 <label key={o.text} className={`opt${picked === i ? " sel" : ""}`}>
@@ -408,22 +431,24 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
             </div>
           </div>
 
+          </section>
+
           <div className="acts">
-            <button type="button" className={`${step <= 3 ? "pri" : ""}${step === 3 ? " cue" : ""}`} onClick={startPreview} disabled={!chosen}><Play />3 · Preview</button>
-            <button type="button" className={`${step >= 4 ? "pri" : ""}${step === 4 ? " cue" : ""}`} onClick={doRender}
+            <button type="button" data-tour="preview" className={`${step <= 3 ? "pri" : ""}${step === 3 ? " cue" : ""}`} onClick={startPreview} disabled={!chosen}><Play />3 · Preview</button>
+            <button type="button" data-tour="render" className={`${step >= 4 ? "pri" : ""}${step === 4 ? " cue" : ""}`} onClick={doRender}
               disabled={!chosen || !renderInfo || Boolean(rendering)}
               title={!renderInfo ? "Rendering runs on the local app (npm run dev)" : undefined}>
               {rendering ? <span className="spinner" /> : <Spark />}{rendering ? "Rendering…" : "4 · Render MP4"}
             </button>
             <button type="button" className="ghost" onClick={copyForRender} disabled={!chosen} title="Copy a JSON brief for your own render pipeline"><Copy />Copy brief</button>
-            {rendering && <p className="note" role="status" style={{ flexBasis: "100%" }}>{rendering}</p>}
+            {(rendering || result) && rprog.steps.length > 0 && <div style={{ flexBasis: "100%" }}><Progress steps={rprog.steps} title={rendering ? "Rendering the new version" : "Rendered"} /></div>}
             {renderErr && <p className="err" style={{ flexBasis: "100%" }}>{renderErr}</p>}
             {!renderInfo && <p className="note" style={{ flexBasis: "100%" }}>Rendering runs on the local app, where ffmpeg and the voice key live.</p>}
             {newRuntime && <p className="note" style={{ flexBasis: "100%" }}>New cut runs about {newRuntime.toFixed(1)} s instead of {reel.duration.toFixed(1)} s. Hook lint checks rules, not predicted views.</p>}
           </div>
         </aside>
 
-        <section className="takes" aria-labelledby="next">
+        <section className="takes" aria-labelledby="next" data-tour="next">
           <div className="sec-bar">
             <h2 id="next">Next batch<span className="sum">{summary(takes)}</span></h2>
             <button type="button" onClick={() => onOpenTake(takes[0]?.code ?? "")}>Open board</button>
@@ -431,7 +456,7 @@ export function Analyze({ reel, brand, retention, source, dropAt, aiMode, lang, 
           <div className="row">
             {takes.map((t) => (
               <button type="button" className="tk" key={t.code} onClick={() => onOpenTake(t.code)}>
-                <h3>{t.code}</h3>
+                <h3>{codeLabel(t.code)}</h3>
                 <span className={`s ${t.status}`}>{label(t.status)}</span>
                 <p>{t.format}</p>
                 {t.note && t.status !== "hooks" && t.status !== "script" && (
@@ -488,14 +513,14 @@ const STEPS = ["See where they left", "Pick a shorter hook", "Preview it", "Rend
 
 function Stepper({ step, hookEnd, dropAt, onSeen, canRender }: { step: number; hookEnd: number; dropAt: number | null; onSeen: () => void; canRender: boolean }) {
   const say: Record<number, React.ReactNode> = {
-    1: <>The coral line is where most viewers swiped away ({dropAt != null ? fmt(dropAt) : "—"}). The old hook kept talking until {hookEnd.toFixed(1)} s. <button type="button" className="linkish" onClick={onSeen}>Got it, next</button></>,
-    2: <>Pick one of the shorter hooks on the right, or type your own. Blue times land before the drop; coral ones land after it.</>,
+    1: <>The red line is where most viewers swiped away ({dropAt != null ? fmt(dropAt) : "—"}). The old hook kept talking until {hookEnd.toFixed(1)} s. <button type="button" className="linkish" onClick={onSeen}>Got it, next</button></>,
+    2: <>Pick one of the shorter hooks on the right, or type your own. Green times land before the drop; red ones land after it.</>,
     3: <>Press <b>Preview</b> to hear and see the new opening over the real reel.</>,
-    4: canRender ? <>Press <b>Render MP4</b>. BEAT records the new voice-over and cuts a real video file.</> : <>Rendering needs the local app. Run <code>npm run dev</code> and open it there.</>,
+    4: canRender ? <>Press <b>Render MP4</b>. Distro records the new voice-over and cuts a real video file.</> : <>Rendering needs the local app. Run <code>npm run dev</code> and open it there.</>,
     5: <>Done. Compare before and after above, then download the MP4. Try another hook any time.</>,
   };
   return (
-    <section className="stepper" aria-label="What to do">
+    <section className="stepper" aria-label="What to do" data-tour="steps">
       <ol>
         {STEPS.map((s, i) => (
           <li key={s} className={i + 1 < step ? "done" : i + 1 === step ? "now" : ""} aria-current={i + 1 === step ? "step" : undefined}>

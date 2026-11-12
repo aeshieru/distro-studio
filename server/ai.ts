@@ -1,4 +1,4 @@
-// BEAT's AI layer. One prompt and one JSON schema per job; several engines can answer it:
+// Distro's AI layer. One prompt and one JSON schema per job; several engines can answer it:
 //   claude-api   ANTHROPIC_API_KEY (Anthropic SDK, structured output)
 //   claude-code  the logged-in Claude Code CLI (`claude -p --json-schema`)
 //   codex        the logged-in OpenAI Codex CLI (`codex exec --output-schema`)
@@ -12,7 +12,7 @@ import { execFile, execFileSync, spawn } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
-import { briefPrompt, hooksPrompt, takesPrompt, type AiRequest } from "../src/lib/prompts.js";
+import { briefPrompt, fixPrompt, hooksPrompt, linesPrompt, profileChatPrompt, slidesPrompt, takesPrompt, type AiRequest } from "../src/lib/prompts.js";
 
 const HooksSchema = z.object({
   hooks: z.array(z.object({ text: z.string(), why: z.string() })),
@@ -32,6 +32,20 @@ const TakesSchema = z.object({
   ),
 });
 
+const SlidesSchema = z.object({
+  takes: z.array(
+    z.object({
+      format: z.string(),
+      title: z.string(),
+      hook: z.string(),
+      slides: z.array(z.object({ kind: z.enum(["moment", "app"]), scene: z.string(), caption: z.string(), sticker: z.string() })),
+      claims: z.array(z.string()),
+    }),
+  ),
+});
+
+const LinesSchema = z.object({ lines: z.array(z.string()) });
+
 export const BriefSchema = z.object({
   name: z.string(),
   oneLiner: z.string(),
@@ -41,12 +55,18 @@ export const BriefSchema = z.object({
   approvedClaims: z.array(z.string()),
   bannedPhrases: z.array(z.string()),
   cta: z.string(),
+  tagline: z.string(),
+  values: z.array(z.string()),
+  tone: z.array(z.string()),
+  aesthetic: z.array(z.string()),
+  colors: z.array(z.string()),
+  links: z.array(z.string()),
   notes: z.string(),
 });
 
 export type Env = Record<string, string | undefined>;
 type Result = { status: number; json: unknown };
-type Job = { prompt: string; schema: z.ZodType; effort: "low" | "medium"; pdf?: { path: string; base64: string } };
+type Job = { prompt: string; schema: z.ZodType; effort: "low" | "medium"; pdf?: { path: string; base64: string }; timeoutMs?: number };
 
 export type EngineId = "claude-api" | "claude-code" | "codex" | "openai" | "gemini";
 const LABELS: Record<EngineId, string> = {
@@ -126,9 +146,15 @@ export async function handleAi(body: string, envOrKey: Env | string | undefined)
   } catch {
     return { status: 400, json: { error: "bad_request", message: "Body is not JSON." } };
   }
-  return req.task === "hooks"
-    ? run({ prompt: hooksPrompt(req), schema: HooksSchema, effort: "low" }, env, req.engine)
-    : run({ prompt: takesPrompt(req), schema: TakesSchema, effort: "medium" }, env, req.engine);
+  if (req.task === "hooks") return run({ prompt: hooksPrompt(req), schema: HooksSchema, effort: "low" }, env, req.engine);
+  if (req.task === "lines") return run({ prompt: linesPrompt(req), schema: LinesSchema, effort: "low", timeoutMs: 75_000 }, env, req.engine);
+  if ((req as { task: string }).task === "profile") {
+    const r = req as unknown as { profile: Record<string, unknown>; message: string; engine?: string };
+    return run({ prompt: profileChatPrompt(r.profile, r.message), schema: BriefSchema, effort: "low" }, env, r.engine);
+  }
+  if (req.task === "fix") return run({ prompt: fixPrompt(req), schema: TakesSchema, effort: "low" }, env, req.engine);
+  if (req.task === "takes" && req.kind === "slideshow") return run({ prompt: slidesPrompt(req), schema: SlidesSchema, effort: "medium" }, env, req.engine);
+  return run({ prompt: takesPrompt(req), schema: TakesSchema, effort: "medium" }, env, req.engine);
 }
 
 const TEXT_EXT = /\.(md|markdown|txt|text|json|csv|html?|xml|ya?ml)$/i;
@@ -160,6 +186,68 @@ export async function handleDoc(body: string, envOrKey: Env | string | undefined
 
   if (text != null && text.length > 400_000) text = text.slice(0, 400_000);
   return run({ prompt: briefPrompt(safe, text) + (pdf ? `\n\nPath: ${pdf.path}` : ""), schema: BriefSchema, effort: "low", pdf }, env, engine);
+}
+
+// Step 1 of reading a site: fetch the public page and keep its readable text.
+export async function handleSiteText(body: string): Promise<Result> {
+  let url: URL;
+  try {
+    const raw = (JSON.parse(body) as { url: string }).url.trim();
+    url = new URL(/^https?:\/\//.test(raw) ? raw : `https://${raw}`);
+  } catch {
+    return { status: 400, json: { error: "bad_url", message: "That doesn't look like a link." } };
+  }
+  if (!/^https?:$/.test(url.protocol) || /^(localhost|127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|0\.|\[?::1)/i.test(url.hostname) || !url.hostname.includes(".")) {
+    return { status: 400, json: { error: "host", message: "Use your app's public website or store page." } };
+  }
+  const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 (compatible; Distro brand reader)", "accept-language": "en" }, redirect: "follow" }).catch(() => null);
+  if (!r || !r.ok) return { status: 502, json: { error: "fetch", message: `Couldn't open ${url.hostname}${r ? ` (error ${r.status})` : ""}. Check the link, or upload a document instead.` } };
+  const html = (await r.text()).slice(0, 2_000_000);
+  const meta = (name: string) => html.match(new RegExp(`<meta[^>]+(?:name|property)=["']${name}["'][^>]*content=["']([^"']*)["']`, "i"))?.[1] ?? "";
+  const title = html.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() ?? "";
+  const text = html
+    .replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<noscript[\s\S]*?<\/noscript>|<svg[\s\S]*?<\/svg>/gi, " ")
+    .replace(/<\/(p|div|li|h[1-6]|br|section|article)>/gi, "\n").replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"')
+    .replace(/[ \t]+/g, " ").replace(/\n\s*\n+/g, "\n").trim().slice(0, 120_000);
+  if (text.length < 80) return { status: 422, json: { error: "empty", message: "That page has almost no readable text (it may load everything with JavaScript). Try its App Store page, or upload a document." } };
+  // Brand colors as the page itself uses them: theme-color plus the most frequent hex codes in its markup and CSS.
+  const counts = new Map<string, number>();
+  for (const m of html.matchAll(/#([0-9a-f]{6})\b/gi)) { const h = `#${m[1].toLowerCase()}`; if (!/^#(f{6}|0{6})$/.test(h)) counts.set(h, (counts.get(h) ?? 0) + 1); }
+  const colors = [meta("theme-color"), ...[...counts.entries()].sort((a, b) => b[1] - a[1]).map(([h]) => h)].filter((c) => /^#[0-9a-f]{6}$/i.test(c)).slice(0, 6);
+  const doc = [`URL: ${url}`, title && `Title: ${title}`, meta("description") && `Description: ${meta("description")}`, meta("og:description") && `Social description: ${meta("og:description")}`, colors.length ? `Colors used on the page: ${colors.join(", ")}` : "", "", text].filter(Boolean).join("\n");
+  return { status: 200, json: { colors, host: url.hostname, url: url.toString(), title, words: text.split(/\s+/).length, text: doc } };
+}
+
+// A website or App Store page in, the brand rules out. Reads the page's own text only.
+export async function handleSite(body: string, envOrKey: Env | string | undefined): Promise<Result> {
+  const env = typeof envOrKey === "object" ? envOrKey : { ...process.env, ANTHROPIC_API_KEY: envOrKey };
+  let url: URL;
+  let engine: string | undefined;
+  try {
+    const j = JSON.parse(body) as { url: string; engine?: string };
+    url = new URL(j.url.trim().match(/^https?:\/\//) ? j.url.trim() : `https://${j.url.trim()}`);
+    engine = j.engine;
+  } catch {
+    return { status: 400, json: { error: "bad_url", message: "That doesn't look like a link." } };
+  }
+  // Public sites only: no local or private network addresses.
+  if (!/^https?:$/.test(url.protocol) || /^(localhost|127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|0\.|\[?::1)/i.test(url.hostname) || !url.hostname.includes(".")) {
+    return { status: 400, json: { error: "host", message: "Use your app's public website or store page." } };
+  }
+  const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 (compatible; Distro brand reader)", "accept-language": "en" }, redirect: "follow" }).catch(() => null);
+  if (!r || !r.ok) return { status: 502, json: { error: "fetch", message: `Couldn't open ${url.hostname}${r ? ` (error ${r.status})` : ""}. Check the link, or upload a document instead.` } };
+  const html = (await r.text()).slice(0, 2_000_000);
+  const meta = (name: string) => html.match(new RegExp(`<meta[^>]+(?:name|property)=["']${name}["'][^>]*content=["']([^"']*)["']`, "i"))?.[1] ?? "";
+  const title = html.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1] ?? "";
+  const text = html
+    .replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<noscript[\s\S]*?<\/noscript>|<svg[\s\S]*?<\/svg>/gi, " ")
+    .replace(/<\/(p|div|li|h[1-6]|br|section|article)>/gi, "\n").replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"')
+    .replace(/[ \t]+/g, " ").replace(/\n\s*\n+/g, "\n").trim().slice(0, 120_000);
+  if (text.length < 80) return { status: 422, json: { error: "empty", message: "That page has almost no readable text (it may load everything with JavaScript). Upload a document instead." } };
+  const doc = [`URL: ${url}`, title && `Title: ${title}`, meta("description") && `Description: ${meta("description")}`, meta("og:description") && `Social description: ${meta("og:description")}`, "", text].filter(Boolean).join("\n");
+  return run({ prompt: briefPrompt(url.hostname, doc), schema: BriefSchema, effort: "low" }, env, engine);
 }
 
 // ---- Schema helpers -------------------------------------------------------
@@ -249,7 +337,7 @@ async function viaClaudeCode(job: Job): Promise<Result> {
   const r = await runCli(cli("claude")!, [
     "-p", "--output-format", "json", "--no-session-persistence", ...tools, "--strict-mcp-config",
     "--json-schema", JSON.stringify(strictSchema(job.schema)),
-  ], job.prompt, { cwd: job.pdf ? join(job.pdf.path, "..") : undefined });
+  ], job.prompt, { cwd: job.pdf ? join(job.pdf.path, "..") : undefined, timeoutMs: job.timeoutMs });
   if (r.timedOut) return TIMEOUT;
   try {
     const env = JSON.parse(r.out);
@@ -270,7 +358,7 @@ async function viaCodex(job: Job): Promise<Result> {
   writeFileSync(schemaFile, JSON.stringify(strictSchema(job.schema)));
   const r = await runCli(cli("codex")!, [
     "exec", "--skip-git-repo-check", "--ephemeral", "-s", "read-only", "--output-schema", schemaFile, "-o", outFile, "-",
-  ], job.prompt, { cwd: dir });
+  ], job.prompt, { cwd: dir, timeoutMs: job.timeoutMs });
   if (r.timedOut) return TIMEOUT;
   if (!existsSync(outFile)) {
     console.error("[beat] Codex output:", r.out.slice(-400), r.err.slice(-600));

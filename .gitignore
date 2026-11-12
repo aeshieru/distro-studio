@@ -7,3 +7,5 @@ dist
 renders/
 .vercel
 .env*
+.DS_Store
+brag-output*/

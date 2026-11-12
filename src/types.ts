@@ -32,6 +32,13 @@ export type Reel = {
 export type Brand = {
   id: string;
   name: string;
+  site?: string;
+  tagline?: string;
+  values?: string[];
+  tone?: string[];
+  aesthetic?: string[];
+  colors?: string[];
+  links?: string[];
   oneLiner: string;
   audience: string;
   voice: string;
@@ -43,6 +50,9 @@ export type Brand = {
   targetSeconds: [number, number];
   endCardSeconds: number;
 };
+
+// One picture in a slideshow (TikTok / Instagram photo mode): a real moment or an app screen.
+export type Slide = { kind: "moment" | "app"; caption: string; scene: string; sticker?: string; screen?: string };
 
 export type TakeStatus = "hooks" | "script" | "checks" | "rendered" | "rejected";
 
@@ -57,7 +67,13 @@ export type Take = {
   captions: boolean;
   status: TakeStatus;
   note?: string;
-  animatic?: { url: string; path: string; sizeMB: number; lufs: number | null; duration: number; voice: string | null };
+  // "slideshow" takes are photo posts: slides instead of a timed video.
+  kind?: "reel" | "slideshow";
+  slides?: Slide[];
+  slideset?: { name: string; url: string }[];
+  // How a style reference shows up in renders: caption look and cut rhythm (seconds per shot).
+  look?: { captions: "balloon" | "bold" | "lower"; cutEvery?: number; ref?: string };
+  animatic?: { url: string; path: string; sizeMB: number; lufs: number | null; duration: number; voice: string | null; plan?: { label: string; source: string }[]; lines?: string[] };
 };
 
 export type HookOption = { text: string; why: string };

@@ -7,6 +7,10 @@ export const MOONSILL: Brand = {
   oneLiner: "A cozy weather garden: your plants grow with the real weather on your street.",
   audience: "PH 18-34, cozy-game and plant people, mostly on FB Reels and TikTok",
   voice: "Warm, cozy, second person. Short sentences.",
+  // From the App Store listing (the listing calls the app "Gentle by design").
+  tagline: "Gentle by design",
+  tone: ["gentle", "warm", "quiet"],
+  site: "https://apps.apple.com/app/moonsill/id6821611152",
   voicePace: 3.3,
   paidFeatures: [
     "full garden",

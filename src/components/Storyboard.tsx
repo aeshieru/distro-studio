@@ -2,6 +2,8 @@
 // a quick pencil sketch picked from what the beat describes, its timing, and the hook
 // in a balloon on the first panel.
 import type { Take } from "../types";
+import { codeLabel } from "../lib/codes";
+import { matchShot, type FootageLibrary } from "../data/footage";
 
 const fmt = (t: number) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
 
@@ -43,15 +45,15 @@ const RULES: [RegExp, string][] = [
   [/window/i, "window"],
 ];
 
-function sketchFor(label: string, i: number) {
+export function sketchFor(label: string, i: number) {
   const hit = RULES.find(([re]) => re.test(label));
   return (S[hit?.[1] ?? "scene"])(i);
 }
 
-export function Storyboard({ take, cta }: { take: Take; cta: string }) {
+export function Storyboard({ take, cta, library }: { take: Take; cta: string; library?: FootageLibrary }) {
   let t = 0;
   return (
-    <ol className="board-strip" aria-label={`Storyboard for ${take.code}`}>
+    <ol className="board-strip" aria-label={`Storyboard for ${codeLabel(take.code)}`}>
       {take.beats.map((b, i) => {
         const start = t; t += b.seconds;
         const last = i === take.beats.length - 1;
@@ -61,6 +63,7 @@ export function Storyboard({ take, cta }: { take: Take; cta: string }) {
               <svg viewBox="0 0 160 100" aria-hidden="true">{sketchFor(b.label, i)}</svg>
               {i === 0 && <span className="sb-say">“{take.hook}”</span>}
               <span className="sb-time">{fmt(start)}–{fmt(t)}</span>
+              <span className={`sb-src${last && /end card/i.test(b.label) ? "" : matchShot(b.label, library) ? " own" : ""}`}>{last && /end card/i.test(b.label) ? "end card" : matchShot(b.label, library) ? `your footage: ${matchShot(b.label, library)!.label.toLowerCase()}` : "sketch"}</span>
             </div>
             <p className="sb-cap"><i>Beat {i + 1}</i>{last && /end card/i.test(b.label) ? cta : b.label}</p>
           </li>

@@ -12,7 +12,7 @@ export type CheckResult = {
 const FREE_WORDS = /\b(free|libre|walang bayad|no cost)\b/i;
 
 function takeText(t: Take) {
-  return [t.title, t.hook, ...t.beats.map((b) => b.label), ...t.claims].join(" \n ");
+  return [t.title, t.hook, ...t.beats.map((b) => b.label), ...(t.slides ?? []).flatMap((s) => [s.caption, s.scene, s.sticker ?? ""]), ...t.claims].join(" \n ");
 }
 
 // Cheapest first. A failing blocking check stops the run, like a gate.
@@ -60,6 +60,8 @@ export function runChecks(take: Take, rawBrand: Brand): CheckResult[] {
       : unapproved.length ? `Not approved: “${unapproved.join("”, “")}”` : `${take.claims.length} claim(s), all approved`,
   })) return out;
 
+  if (take.kind === "slideshow") return slideshowTail(take, brand, out, push);
+
   const lateEnough = take.logoAt >= runtime - brand.endCardSeconds - 0.01;
   if (push({
     id: "logo", label: "Logo and app screen only at the end", blocks: true,
@@ -90,6 +92,28 @@ export function runChecks(take: Take, rawBrand: Brand): CheckResult[] {
   push(a
     ? { id: "size", label: "Under 10 MB per platform cut", blocks: false, state: a.sizeMB < 10 ? "pass" : "warn", detail: `Measured ${a.sizeMB} MB on the animatic` }
     : { id: "size", label: "Under 10 MB per platform cut", blocks: false, state: "later", detail: "Measured on the rendered file" });
+  return out;
+}
+
+// Photo posts: app screens are part of the story, so only the app's name and logo wait for the
+// last slide. Timing checks become slide counts and caption length.
+function slideshowTail(take: Take, brand: Brand, out: CheckResult[], push: (r: CheckResult) => boolean) {
+  const slides = take.slides ?? [];
+  const name = brand.name.toLowerCase();
+  const early = slides.slice(0, -1).findIndex((s) => s.caption.toLowerCase().includes(name));
+  if (push({
+    id: "logo", label: "App name only on the last slide", blocks: true,
+    state: early === -1 ? "pass" : "fail",
+    detail: early === -1 ? `App screens tell the story; ${brand.name} is named on slide ${slides.length}` : `Slide ${early + 1} names ${brand.name}; keep the name for the last slide`,
+  })) return out;
+  const words = take.hook.split(/\s+/).filter(Boolean).length;
+  push({ id: "hook", label: "First caption reads in a glance", blocks: false, state: words <= 8 ? "pass" : "warn", detail: `${words} words on slide 1` });
+  push({ id: "runtime", label: "5 to 8 slides", blocks: false, state: slides.length >= 5 && slides.length <= 8 ? "pass" : "warn", detail: `${slides.length} slides planned` });
+  const mix = slides.some((s) => s.kind === "moment") && slides.some((s) => s.kind === "app");
+  push({ id: "mix", label: "Real moments cut with app screens", blocks: false, state: mix ? "pass" : "warn", detail: `${slides.filter((s) => s.kind === "moment").length} moments, ${slides.filter((s) => s.kind === "app").length} app screens` });
+  push(take.slideset
+    ? { id: "size", label: "1080×1920 slides", blocks: false, state: "pass", detail: `${take.slideset.length} PNGs rendered` }
+    : { id: "size", label: "1080×1920 slides", blocks: false, state: "later", detail: "Checked on the rendered slides" });
   return out;
 }
 

@@ -27,7 +27,7 @@ export async function handleLink(body: string): Promise<Result> {
     return { status: 400, json: { error: "host", message: "Paste an Instagram, Facebook, TikTok or YouTube link." } };
   }
   const site = /tiktok/.test(url.hostname) ? "TikTok" : /youtu/.test(url.hostname) ? "YouTube" : /instagram/.test(url.hostname) ? "Instagram" : "Facebook";
-  const headers = { "user-agent": "Mozilla/5.0 (compatible; BEAT link preview)", "accept-language": "en" };
+  const headers = { "user-agent": "Mozilla/5.0 (compatible; Distro link preview)", "accept-language": "en" };
 
   try {
     if (site === "TikTok" || site === "YouTube") {

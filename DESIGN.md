@@ -25,6 +25,8 @@ colors:
   balloon-ink: "#120d22"
   balloon-drop: "#b8322a"
   balloon-accent: "#6b2fd6"
+  sketch-ink: "#4a4560"
+  surface-tab-on: "#2e2850"
   screen-black: "#000000"
   drop: "#ff6b5e"
   drop-text: "#ff9188"
@@ -43,9 +45,20 @@ colors:
   halftone-dot: "rgba(8, 4, 16, 0.35)"
   float-shadow: "rgba(0, 0, 0, 0.5)"
 typography:
+  hero:
+    fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
+    fontSize: "56px"
+    fontWeight: 800
+    lineHeight: 1.05
+    letterSpacing: "-0.03em"
+  hero-mobile:
+    fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
+    fontSize: "40px"
+    fontWeight: 800
+    lineHeight: 1.05
   display:
     fontFamily: "Archivo, Helvetica Neue, Arial, sans-serif"
-    fontSize: "30px"
+    fontSize: "34px"
     fontWeight: 800
     lineHeight: 1.1
     letterSpacing: "-0.02em"
@@ -150,6 +163,11 @@ rounded:
   lg: "12px"
   xl: "14px"
   panel: "16px"
+  panel-lg: "18px"
+  panel-xl: "22px"
+  hero-card: "26px"
+  bar-sm: "3px"
+  bar-md: "5px"
   pill: "999px"
 spacing:
   "2": "2px"
