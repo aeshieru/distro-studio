@@ -1,6 +1,6 @@
 // Vercel function: public preview data for a style-reference link.
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { handleLink } from "../server/link";
+import { handleLink } from "../server/link.js";
 
 type Req = IncomingMessage & { body?: unknown };
 

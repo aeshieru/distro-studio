@@ -1,7 +1,7 @@
 // Vercel function: product document to brand rules. Markdown, text and PDF work here;
 // Word files need the local app (macOS textutil).
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { engines, handleDoc } from "../server/ai";
+import { engines, handleDoc } from "../server/ai.js";
 
 type Req = IncomingMessage & { body?: unknown };
 

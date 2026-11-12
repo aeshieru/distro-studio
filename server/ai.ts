@@ -12,7 +12,7 @@ import { execFile, execFileSync, spawn } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
-import { briefPrompt, hooksPrompt, takesPrompt, type AiRequest } from "../src/lib/prompts";
+import { briefPrompt, hooksPrompt, takesPrompt, type AiRequest } from "../src/lib/prompts.js";
 
 const HooksSchema = z.object({
   hooks: z.array(z.object({ text: z.string(), why: z.string() })),

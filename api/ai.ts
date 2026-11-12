@@ -1,7 +1,7 @@
 // Vercel function: live AI for the deployed site. Needs ANTHROPIC_API_KEY or OPENAI_API_KEY
 // in the project's environment variables; without one the site runs on the saved run.
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { defaultEngine, engines, handleAi } from "../server/ai";
+import { defaultEngine, engines, handleAi } from "../server/ai.js";
 
 type Req = IncomingMessage & { body?: unknown };
 
