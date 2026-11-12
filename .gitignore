@@ -5,3 +5,5 @@ dist
 .impeccable/questions/
 .impeccable/review/
 renders/
+.vercel
+.env*
