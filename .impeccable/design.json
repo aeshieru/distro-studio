@@ -1,0 +1,881 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-12T08:48:12.063Z",
+  "title": "Design System: BEAT",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Violet Night",
+        "canonical": "#080410",
+        "tonalRamp": [
+          "oklch(15% 0.009 301)",
+          "oklch(25% 0.015 301)",
+          "oklch(35% 0.021 301)",
+          "oklch(48% 0.029 301)",
+          "oklch(60% 0.024 301)",
+          "oklch(72% 0.017 301)",
+          "oklch(85% 0.009 301)",
+          "oklch(95% 0.005 301)"
+        ]
+      },
+      "shell": {
+        "role": "neutral",
+        "displayName": "Navy Shell",
+        "canonical": "#141833",
+        "tonalRamp": [
+          "oklch(15% 0.016 275)",
+          "oklch(25% 0.026 275)",
+          "oklch(35% 0.037 275)",
+          "oklch(48% 0.051 275)",
+          "oklch(60% 0.042 275)",
+          "oklch(72% 0.030 275)",
+          "oklch(85% 0.016 275)",
+          "oklch(95% 0.008 275)"
+        ]
+      },
+      "shell-raised": {
+        "role": "neutral",
+        "displayName": "Shell Raised",
+        "canonical": "#1f2550",
+        "tonalRamp": [
+          "oklch(15% 0.023 274)",
+          "oklch(25% 0.039 274)",
+          "oklch(35% 0.055 274)",
+          "oklch(48% 0.075 274)",
+          "oklch(60% 0.063 274)",
+          "oklch(72% 0.044 274)",
+          "oklch(85% 0.023 274)",
+          "oklch(95% 0.012 274)"
+        ]
+      },
+      "shell-sheen": {
+        "role": "neutral",
+        "displayName": "Shell Sheen",
+        "canonical": "#1a1f3d",
+        "tonalRamp": [
+          "oklch(15% 0.017 274)",
+          "oklch(25% 0.028 274)",
+          "oklch(35% 0.040 274)",
+          "oklch(48% 0.055 274)",
+          "oklch(60% 0.046 274)",
+          "oklch(72% 0.032 274)",
+          "oklch(85% 0.017 274)",
+          "oklch(95% 0.009 274)"
+        ]
+      },
+      "shell-deep": {
+        "role": "neutral",
+        "displayName": "Shell Deep",
+        "canonical": "#121530",
+        "tonalRamp": [
+          "oklch(15% 0.016 276)",
+          "oklch(25% 0.027 276)",
+          "oklch(35% 0.037 276)",
+          "oklch(48% 0.051 276)",
+          "oklch(60% 0.042 276)",
+          "oklch(72% 0.030 276)",
+          "oklch(85% 0.016 276)",
+          "oklch(95% 0.008 276)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#0f0c1a",
+        "tonalRamp": [
+          "oklch(15% 0.009 293)",
+          "oklch(25% 0.015 293)",
+          "oklch(35% 0.020 293)",
+          "oklch(48% 0.028 293)",
+          "oklch(60% 0.023 293)",
+          "oklch(72% 0.016 293)",
+          "oklch(85% 0.009 293)",
+          "oklch(95% 0.004 293)"
+        ]
+      },
+      "surface-2": {
+        "role": "neutral",
+        "displayName": "Surface Two",
+        "canonical": "#17132a",
+        "tonalRamp": [
+          "oklch(15% 0.013 290)",
+          "oklch(25% 0.022 290)",
+          "oklch(35% 0.031 290)",
+          "oklch(48% 0.043 290)",
+          "oklch(60% 0.036 290)",
+          "oklch(72% 0.025 290)",
+          "oklch(85% 0.013 290)",
+          "oklch(95% 0.007 290)"
+        ]
+      },
+      "surface-3": {
+        "role": "neutral",
+        "displayName": "Surface Three",
+        "canonical": "#221d3a",
+        "tonalRamp": [
+          "oklch(15% 0.016 290)",
+          "oklch(25% 0.027 290)",
+          "oklch(35% 0.038 290)",
+          "oklch(48% 0.052 290)",
+          "oklch(60% 0.043 290)",
+          "oklch(72% 0.030 290)",
+          "oklch(85% 0.016 290)",
+          "oklch(95% 0.008 290)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#2b2742",
+        "tonalRamp": [
+          "oklch(15% 0.015 290)",
+          "oklch(25% 0.024 290)",
+          "oklch(35% 0.034 290)",
+          "oklch(48% 0.047 290)",
+          "oklch(60% 0.039 290)",
+          "oklch(72% 0.027 290)",
+          "oklch(85% 0.015 290)",
+          "oklch(95% 0.007 290)"
+        ]
+      },
+      "line-2": {
+        "role": "neutral",
+        "displayName": "Frame Line",
+        "canonical": "#3d3760",
+        "tonalRamp": [
+          "oklch(15% 0.021 289)",
+          "oklch(25% 0.035 289)",
+          "oklch(35% 0.049 289)",
+          "oklch(48% 0.067 289)",
+          "oklch(60% 0.056 289)",
+          "oklch(72% 0.039 289)",
+          "oklch(85% 0.021 289)",
+          "oklch(95% 0.010 289)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Text",
+        "canonical": "#f4f2fb",
+        "tonalRamp": [
+          "oklch(15% 0.004 296)",
+          "oklch(25% 0.006 296)",
+          "oklch(35% 0.008 296)",
+          "oklch(48% 0.012 296)",
+          "oklch(60% 0.010 296)",
+          "oklch(72% 0.007 296)",
+          "oklch(85% 0.004 296)",
+          "oklch(95% 0.002 296)"
+        ]
+      },
+      "text-2": {
+        "role": "neutral",
+        "displayName": "Secondary Text",
+        "canonical": "#b9b4cc",
+        "tonalRamp": [
+          "oklch(15% 0.010 295)",
+          "oklch(25% 0.017 295)",
+          "oklch(35% 0.024 295)",
+          "oklch(48% 0.033 295)",
+          "oklch(60% 0.027 295)",
+          "oklch(72% 0.019 295)",
+          "oklch(85% 0.010 295)",
+          "oklch(95% 0.005 295)"
+        ]
+      },
+      "text-3": {
+        "role": "neutral",
+        "displayName": "Faint Text",
+        "canonical": "#8b85a1",
+        "tonalRamp": [
+          "oklch(15% 0.013 295)",
+          "oklch(25% 0.021 295)",
+          "oklch(35% 0.029 295)",
+          "oklch(48% 0.040 295)",
+          "oklch(60% 0.034 295)",
+          "oklch(72% 0.024 295)",
+          "oklch(85% 0.013 295)",
+          "oklch(95% 0.006 295)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(25% 0.000 90)",
+          "oklch(35% 0.000 90)",
+          "oklch(48% 0.000 90)",
+          "oklch(60% 0.000 90)",
+          "oklch(72% 0.000 90)",
+          "oklch(85% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      },
+      "violet": {
+        "role": "primary",
+        "displayName": "Electric Violet",
+        "canonical": "#8e51ff",
+        "tonalRamp": [
+          "oklch(15% 0.073 294)",
+          "oklch(25% 0.121 294)",
+          "oklch(35% 0.170 294)",
+          "oklch(48% 0.233 294)",
+          "oklch(60% 0.194 294)",
+          "oklch(72% 0.136 294)",
+          "oklch(85% 0.073 294)",
+          "oklch(95% 0.036 294)"
+        ]
+      },
+      "lilac": {
+        "role": "primary",
+        "displayName": "Lilac",
+        "canonical": "#a684ff",
+        "tonalRamp": [
+          "oklch(15% 0.053 294)",
+          "oklch(25% 0.088 294)",
+          "oklch(35% 0.123 294)",
+          "oklch(48% 0.169 294)",
+          "oklch(60% 0.141 294)",
+          "oklch(72% 0.099 294)",
+          "oklch(85% 0.053 294)",
+          "oklch(95% 0.026 294)"
+        ]
+      },
+      "violet-tint": {
+        "role": "primary",
+        "displayName": "Violet Tint",
+        "canonical": "#1e1640",
+        "tonalRamp": [
+          "oklch(15% 0.023 288)",
+          "oklch(25% 0.038 288)",
+          "oklch(35% 0.054 288)",
+          "oklch(48% 0.074 288)",
+          "oklch(60% 0.061 288)",
+          "oklch(72% 0.043 288)",
+          "oklch(85% 0.023 288)",
+          "oklch(95% 0.011 288)"
+        ]
+      },
+      "caption": {
+        "role": "neutral",
+        "displayName": "Caption Night",
+        "canonical": "#1c1838",
+        "tonalRamp": [
+          "oklch(15% 0.018 286)",
+          "oklch(25% 0.030 286)",
+          "oklch(35% 0.042 286)",
+          "oklch(48% 0.058 286)",
+          "oklch(60% 0.048 286)",
+          "oklch(72% 0.034 286)",
+          "oklch(85% 0.018 286)",
+          "oklch(95% 0.009 286)"
+        ]
+      },
+      "chart-ink": {
+        "role": "neutral",
+        "displayName": "Chart Ink",
+        "canonical": "#e9e6f5",
+        "tonalRamp": [
+          "oklch(15% 0.006 295)",
+          "oklch(25% 0.010 295)",
+          "oklch(35% 0.014 295)",
+          "oklch(48% 0.020 295)",
+          "oklch(60% 0.016 295)",
+          "oklch(72% 0.011 295)",
+          "oklch(85% 0.006 295)",
+          "oklch(95% 0.003 295)"
+        ]
+      },
+      "button-ink": {
+        "role": "neutral",
+        "displayName": "Button Ink",
+        "canonical": "#0b0816",
+        "tonalRamp": [
+          "oklch(15% 0.009 292)",
+          "oklch(25% 0.015 292)",
+          "oklch(35% 0.021 292)",
+          "oklch(48% 0.029 292)",
+          "oklch(60% 0.024 292)",
+          "oklch(72% 0.017 292)",
+          "oklch(85% 0.009 292)",
+          "oklch(95% 0.005 292)"
+        ]
+      },
+      "balloon-ink": {
+        "role": "neutral",
+        "displayName": "Balloon Ink",
+        "canonical": "#120d22",
+        "tonalRamp": [
+          "oklch(15% 0.013 293)",
+          "oklch(25% 0.021 293)",
+          "oklch(35% 0.030 293)",
+          "oklch(48% 0.041 293)",
+          "oklch(60% 0.034 293)",
+          "oklch(72% 0.024 293)",
+          "oklch(85% 0.013 293)",
+          "oklch(95% 0.006 293)"
+        ]
+      },
+      "screen-black": {
+        "role": "neutral",
+        "displayName": "Screen Black",
+        "canonical": "#000000",
+        "tonalRamp": [
+          "oklch(15% 0.000 0)",
+          "oklch(25% 0.000 0)",
+          "oklch(35% 0.000 0)",
+          "oklch(48% 0.000 0)",
+          "oklch(60% 0.000 0)",
+          "oklch(72% 0.000 0)",
+          "oklch(85% 0.000 0)",
+          "oklch(95% 0.000 0)"
+        ]
+      },
+      "drop": {
+        "role": "tertiary",
+        "displayName": "Drop Coral",
+        "canonical": "#ff6b5e",
+        "tonalRamp": [
+          "oklch(15% 0.055 28)",
+          "oklch(25% 0.092 28)",
+          "oklch(35% 0.128 28)",
+          "oklch(48% 0.176 28)",
+          "oklch(60% 0.147 28)",
+          "oklch(72% 0.103 28)",
+          "oklch(85% 0.055 28)",
+          "oklch(95% 0.027 28)"
+        ]
+      },
+      "drop-text": {
+        "role": "tertiary",
+        "displayName": "Drop Text",
+        "canonical": "#ff9188",
+        "tonalRamp": [
+          "oklch(15% 0.040 26)",
+          "oklch(25% 0.067 26)",
+          "oklch(35% 0.094 26)",
+          "oklch(48% 0.129 26)",
+          "oklch(60% 0.107 26)",
+          "oklch(72% 0.075 26)",
+          "oklch(85% 0.040 26)",
+          "oklch(95% 0.020 26)"
+        ]
+      },
+      "drop-tint": {
+        "role": "tertiary",
+        "displayName": "Drop Tint",
+        "canonical": "rgba(255, 107, 94, 0.16)",
+        "tonalRamp": [
+          "oklch(15% 0.055 28)",
+          "oklch(25% 0.092 28)",
+          "oklch(35% 0.128 28)",
+          "oklch(48% 0.176 28)",
+          "oklch(60% 0.147 28)",
+          "oklch(72% 0.103 28)",
+          "oklch(85% 0.055 28)",
+          "oklch(95% 0.027 28)"
+        ]
+      },
+      "drop-glow": {
+        "role": "tertiary",
+        "displayName": "Drop Glow",
+        "canonical": "rgba(255, 107, 94, 0.25)",
+        "tonalRamp": [
+          "oklch(15% 0.055 28)",
+          "oklch(25% 0.092 28)",
+          "oklch(35% 0.128 28)",
+          "oklch(48% 0.176 28)",
+          "oklch(60% 0.147 28)",
+          "oklch(72% 0.103 28)",
+          "oklch(85% 0.055 28)",
+          "oklch(95% 0.027 28)"
+        ]
+      },
+      "drop-edge": {
+        "role": "tertiary",
+        "displayName": "Drop Edge",
+        "canonical": "rgba(255, 107, 94, 0.55)",
+        "tonalRamp": [
+          "oklch(15% 0.055 28)",
+          "oklch(25% 0.092 28)",
+          "oklch(35% 0.128 28)",
+          "oklch(48% 0.176 28)",
+          "oklch(60% 0.147 28)",
+          "oklch(72% 0.103 28)",
+          "oklch(85% 0.055 28)",
+          "oklch(95% 0.027 28)"
+        ]
+      },
+      "violet-glow-faint": {
+        "role": "primary",
+        "displayName": "Violet Glow 18",
+        "canonical": "rgba(142, 81, 255, 0.18)",
+        "tonalRamp": [
+          "oklch(15% 0.073 294)",
+          "oklch(25% 0.121 294)",
+          "oklch(35% 0.170 294)",
+          "oklch(48% 0.233 294)",
+          "oklch(60% 0.194 294)",
+          "oklch(72% 0.136 294)",
+          "oklch(85% 0.073 294)",
+          "oklch(95% 0.036 294)"
+        ]
+      },
+      "violet-glow-soft": {
+        "role": "primary",
+        "displayName": "Violet Glow 20",
+        "canonical": "rgba(142, 81, 255, 0.2)",
+        "tonalRamp": [
+          "oklch(15% 0.073 294)",
+          "oklch(25% 0.121 294)",
+          "oklch(35% 0.170 294)",
+          "oklch(48% 0.233 294)",
+          "oklch(60% 0.194 294)",
+          "oklch(72% 0.136 294)",
+          "oklch(85% 0.073 294)",
+          "oklch(95% 0.036 294)"
+        ]
+      },
+      "violet-glow": {
+        "role": "primary",
+        "displayName": "Violet Glow 25",
+        "canonical": "rgba(142, 81, 255, 0.25)",
+        "tonalRamp": [
+          "oklch(15% 0.073 294)",
+          "oklch(25% 0.121 294)",
+          "oklch(35% 0.170 294)",
+          "oklch(48% 0.233 294)",
+          "oklch(60% 0.194 294)",
+          "oklch(72% 0.136 294)",
+          "oklch(85% 0.073 294)",
+          "oklch(95% 0.036 294)"
+        ]
+      },
+      "violet-glow-strong": {
+        "role": "primary",
+        "displayName": "Violet Glow 45",
+        "canonical": "rgba(142, 81, 255, 0.45)",
+        "tonalRamp": [
+          "oklch(15% 0.073 294)",
+          "oklch(25% 0.121 294)",
+          "oklch(35% 0.170 294)",
+          "oklch(48% 0.233 294)",
+          "oklch(60% 0.194 294)",
+          "oklch(72% 0.136 294)",
+          "oklch(85% 0.073 294)",
+          "oklch(95% 0.036 294)"
+        ]
+      },
+      "violet-edge": {
+        "role": "primary",
+        "displayName": "Violet Edge 55",
+        "canonical": "rgba(142, 81, 255, 0.55)",
+        "tonalRamp": [
+          "oklch(15% 0.073 294)",
+          "oklch(25% 0.121 294)",
+          "oklch(35% 0.170 294)",
+          "oklch(48% 0.233 294)",
+          "oklch(60% 0.194 294)",
+          "oklch(72% 0.136 294)",
+          "oklch(85% 0.073 294)",
+          "oklch(95% 0.036 294)"
+        ]
+      },
+      "violet-rim": {
+        "role": "primary",
+        "displayName": "Violet Rim 60",
+        "canonical": "rgba(142, 81, 255, 0.6)",
+        "tonalRamp": [
+          "oklch(15% 0.073 294)",
+          "oklch(25% 0.121 294)",
+          "oklch(35% 0.170 294)",
+          "oklch(48% 0.233 294)",
+          "oklch(60% 0.194 294)",
+          "oklch(72% 0.136 294)",
+          "oklch(85% 0.073 294)",
+          "oklch(95% 0.036 294)"
+        ]
+      },
+      "lilac-glow": {
+        "role": "primary",
+        "displayName": "Lilac Glow 30",
+        "canonical": "rgba(166, 132, 255, 0.3)",
+        "tonalRamp": [
+          "oklch(15% 0.053 294)",
+          "oklch(25% 0.088 294)",
+          "oklch(35% 0.123 294)",
+          "oklch(48% 0.169 294)",
+          "oklch(60% 0.141 294)",
+          "oklch(72% 0.099 294)",
+          "oklch(85% 0.053 294)",
+          "oklch(95% 0.026 294)"
+        ]
+      },
+      "lilac-glow-strong": {
+        "role": "primary",
+        "displayName": "Lilac Glow 35",
+        "canonical": "rgba(166, 132, 255, 0.35)",
+        "tonalRamp": [
+          "oklch(15% 0.053 294)",
+          "oklch(25% 0.088 294)",
+          "oklch(35% 0.123 294)",
+          "oklch(48% 0.169 294)",
+          "oklch(60% 0.141 294)",
+          "oklch(72% 0.099 294)",
+          "oklch(85% 0.053 294)",
+          "oklch(95% 0.026 294)"
+        ]
+      },
+      "ground-veil": {
+        "role": "neutral",
+        "displayName": "Ground Veil",
+        "canonical": "rgba(8, 4, 16, 0.97)",
+        "tonalRamp": [
+          "oklch(15% 0.009 301)",
+          "oklch(25% 0.015 301)",
+          "oklch(35% 0.021 301)",
+          "oklch(48% 0.029 301)",
+          "oklch(60% 0.024 301)",
+          "oklch(72% 0.017 301)",
+          "oklch(85% 0.009 301)",
+          "oklch(95% 0.005 301)"
+        ]
+      },
+      "halftone-dot": {
+        "role": "neutral",
+        "displayName": "Halftone Dot",
+        "canonical": "rgba(8, 4, 16, 0.35)",
+        "tonalRamp": [
+          "oklch(15% 0.009 301)",
+          "oklch(25% 0.015 301)",
+          "oklch(35% 0.021 301)",
+          "oklch(48% 0.029 301)",
+          "oklch(60% 0.024 301)",
+          "oklch(72% 0.017 301)",
+          "oklch(85% 0.009 301)",
+          "oklch(95% 0.005 301)"
+        ]
+      },
+      "float-shadow": {
+        "role": "neutral",
+        "displayName": "Float Shadow",
+        "canonical": "rgba(0, 0, 0, 0.5)",
+        "tonalRamp": [
+          "oklch(15% 0.000 0)",
+          "oklch(25% 0.000 0)",
+          "oklch(35% 0.000 0)",
+          "oklch(48% 0.000 0)",
+          "oklch(60% 0.000 0)",
+          "oklch(72% 0.000 0)",
+          "oklch(85% 0.000 0)",
+          "oklch(95% 0.000 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The page title."
+      },
+      "timecode": {
+        "displayName": "Timecode",
+        "purpose": "Player timecode."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Title-row stats."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section heads."
+      },
+      "option": {
+        "displayName": "Option",
+        "purpose": "Rewrite option text."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All reading text, tabular numerals."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Buttons, toasts, crumb."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "Idea steps, checklists, tile text."
+      },
+      "tile-title": {
+        "displayName": "Tile Title",
+        "purpose": "Idea and board card headers, take ids."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Meta lines, legends, notes, field labels."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Small section labels, chips, facts terms."
+      },
+      "micro": {
+        "displayName": "Micro",
+        "purpose": "Rail labels, axis text, source tags."
+      },
+      "tag": {
+        "displayName": "Tag",
+        "purpose": "Status tags and beat ids in captions."
+      },
+      "badge": {
+        "displayName": "Badge",
+        "purpose": "Player badge."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Inline code and file paths only."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Caption boxes under beat panels."
+      },
+      "now-beat": {
+        "displayName": "Now Beat",
+        "purpose": "Current-beat box beside the player."
+      },
+      "say": {
+        "displayName": "Say",
+        "purpose": "Word-by-word preview balloon over the player."
+      },
+      "balloon": {
+        "displayName": "Balloon",
+        "purpose": "Speech balloon above the strip."
+      },
+      "hook-quote": {
+        "displayName": "Hook Quote",
+        "purpose": "Hook quotes on idea cards."
+      },
+      "hook-detail": {
+        "displayName": "Hook Detail",
+        "purpose": "Hook quote in the board card detail."
+      }
+    },
+    "shadows": [
+      {
+        "name": "now-ring",
+        "value": "0 0 0 1px #a684ff, 0 0 16px rgba(166, 132, 255, 0.35)",
+        "purpose": "Panel under the playhead; selected board card uses 0.3."
+      },
+      {
+        "name": "selection-glow",
+        "value": "0 0 22px rgba(142, 81, 255, 0.18)",
+        "purpose": "Chosen rewrite option."
+      },
+      {
+        "name": "nav-current-glow",
+        "value": "0 0 18px rgba(142, 81, 255, 0.45)",
+        "purpose": "Current rail letter."
+      },
+      {
+        "name": "step-current-glow",
+        "value": "0 0 18px rgba(142, 81, 255, 0.25)",
+        "purpose": "Current stepper step."
+      },
+      {
+        "name": "lane-drop-target",
+        "value": "inset 0 0 0 1.5px #8e51ff, 0 0 24px rgba(142, 81, 255, 0.2)",
+        "purpose": "Board lane on drag-over; bin uses inset 1.5px coral."
+      },
+      {
+        "name": "dropzone-over",
+        "value": "0 0 28px rgba(142, 81, 255, 0.25)",
+        "purpose": "Brief upload dropzone on drag-over."
+      },
+      {
+        "name": "toast",
+        "value": "0 10px 30px rgba(0, 0, 0, 0.5), 0 0 24px rgba(142, 81, 255, 0.25)",
+        "purpose": "The only floating layer; coral glow rgba(255, 107, 94, 0.25) when bad."
+      },
+      {
+        "name": "live-dot",
+        "value": "0 0 8px #a684ff",
+        "purpose": "Live AI status dot."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The single easing curve for pops, lifts and the guide cue."
+      },
+      {
+        "name": "state",
+        "value": "0.15s",
+        "purpose": "Hover and colour transitions on controls and lanes."
+      },
+      {
+        "name": "panel-lift",
+        "value": "transform 0.25s",
+        "purpose": "Beat panel lifts 2px on hover."
+      },
+      {
+        "name": "pop",
+        "value": "0.35s to 0.5s",
+        "purpose": "Balloons, toast, result and draft panels scale in from 0.6."
+      },
+      {
+        "name": "cue",
+        "value": "1.6s infinite",
+        "purpose": "Dashed lilac outline breathing on the stepper's target; off under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stack",
+        "value": "1180px"
+      },
+      {
+        "name": "mobile",
+        "value": "720px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one white pill per action group.",
+      "html": "<div class=\"ds-wrap\"><button class=\"ds-btn ds-btn-pri\">Preview new hook</button></div>",
+      "css": ":host{--bg:#080410;--shell:#141833;--surface:#0f0c1a;--surface-2:#17132a;--surface-3:#221d3a;--line:#2b2742;--line-2:#3d3760;--text:#f4f2fb;--text-2:#b9b4cc;--text-3:#8b85a1;--violet:#8e51ff;--lilac:#a684ff;--violet-tint:#1e1640;--cap:#1c1838;--drop:#ff6b5e;--drop-text:#ff9188;--drop-tint:rgba(255,107,94,0.16);--head:'Archivo','Helvetica Neue',Arial,sans-serif;--body:'Public Sans','Helvetica Neue',Arial,sans-serif;--hand:'Patrick Hand SC','Comic Neue','Chalkboard SE',cursive;--ease:cubic-bezier(0.16, 1, 0.3, 1);color-scheme:dark;} .ds-wrap{background:var(--bg);padding:16px;} .ds-btn{font:600 13.5px var(--head);border-radius:999px;cursor:pointer;padding:8px 16px;border:1px solid var(--line-2);background:transparent;color:var(--text);display:inline-flex;align-items:center;gap:6px;transition:background .15s,color .15s,border-color .15s,box-shadow .15s;} .ds-btn:hover{background:var(--surface-3);border-color:var(--text-3);} .ds-btn:focus-visible{outline:2px solid var(--lilac);outline-offset:2px;} .ds-btn-pri{background:#fff;border-color:#fff;color:#0b0816;} .ds-btn-pri:hover{background:var(--lilac);border-color:var(--lilac);color:#0b0816;}"
+    },
+    {
+      "name": "Default Button",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "Outline pill for secondary actions.",
+      "html": "<div class=\"ds-wrap\"><button class=\"ds-btn\">Import FB export</button> <button class=\"ds-btn ds-btn-ghost\">Copy</button></div>",
+      "css": ":host{--bg:#080410;--shell:#141833;--surface:#0f0c1a;--surface-2:#17132a;--surface-3:#221d3a;--line:#2b2742;--line-2:#3d3760;--text:#f4f2fb;--text-2:#b9b4cc;--text-3:#8b85a1;--violet:#8e51ff;--lilac:#a684ff;--violet-tint:#1e1640;--cap:#1c1838;--drop:#ff6b5e;--drop-text:#ff9188;--drop-tint:rgba(255,107,94,0.16);--head:'Archivo','Helvetica Neue',Arial,sans-serif;--body:'Public Sans','Helvetica Neue',Arial,sans-serif;--hand:'Patrick Hand SC','Comic Neue','Chalkboard SE',cursive;--ease:cubic-bezier(0.16, 1, 0.3, 1);color-scheme:dark;} .ds-wrap{background:var(--bg);padding:16px;display:flex;gap:8px;} .ds-btn{font:600 13.5px var(--head);border-radius:999px;cursor:pointer;padding:8px 16px;border:1px solid var(--line-2);background:transparent;color:var(--text);display:inline-flex;align-items:center;gap:6px;transition:background .15s,color .15s,border-color .15s,box-shadow .15s;} .ds-btn:hover{background:var(--surface-3);border-color:var(--text-3);} .ds-btn:focus-visible{outline:2px solid var(--lilac);outline-offset:2px;} .ds-btn-ghost{border-color:transparent;padding:6px 10px;} .ds-btn-ghost:hover{background:var(--surface-3);border-color:transparent;}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Rounded dark field with a label above.",
+      "html": "<div class=\"ds-wrap\"><label class=\"ds-field\">App name<input class=\"ds-input\" type=\"text\" value=\"Moonsill\"></label></div>",
+      "css": ":host{--bg:#080410;--shell:#141833;--surface:#0f0c1a;--surface-2:#17132a;--surface-3:#221d3a;--line:#2b2742;--line-2:#3d3760;--text:#f4f2fb;--text-2:#b9b4cc;--text-3:#8b85a1;--violet:#8e51ff;--lilac:#a684ff;--violet-tint:#1e1640;--cap:#1c1838;--drop:#ff6b5e;--drop-text:#ff9188;--drop-tint:rgba(255,107,94,0.16);--head:'Archivo','Helvetica Neue',Arial,sans-serif;--body:'Public Sans','Helvetica Neue',Arial,sans-serif;--hand:'Patrick Hand SC','Comic Neue','Chalkboard SE',cursive;--ease:cubic-bezier(0.16, 1, 0.3, 1);color-scheme:dark;} .ds-wrap{background:var(--bg);padding:16px;} .ds-field{display:grid;gap:6px;font:600 12.5px var(--head);color:var(--text-2);} .ds-input{font:500 14px var(--body);color:var(--text);background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:9px 12px;} .ds-input:focus-visible{outline:2px solid var(--lilac);outline-offset:2px;}"
+    },
+    {
+      "name": "Rail Navigation",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Navy rail with B E A T letter boxes; current glows violet.",
+      "html": "<nav class=\"ds-rail\"><div class=\"ds-logo\">BEAT</div><button class=\"ds-nav\"><b>B</b>Brief</button><button class=\"ds-nav\"><b>E</b>Explore</button><button class=\"ds-nav\"><b>A</b>Arrange</button><button class=\"ds-nav ds-cur\"><b>T</b>Track</button></nav>",
+      "css": ":host{--bg:#080410;--shell:#141833;--surface:#0f0c1a;--surface-2:#17132a;--surface-3:#221d3a;--line:#2b2742;--line-2:#3d3760;--text:#f4f2fb;--text-2:#b9b4cc;--text-3:#8b85a1;--violet:#8e51ff;--lilac:#a684ff;--violet-tint:#1e1640;--cap:#1c1838;--drop:#ff6b5e;--drop-text:#ff9188;--drop-tint:rgba(255,107,94,0.16);--head:'Archivo','Helvetica Neue',Arial,sans-serif;--body:'Public Sans','Helvetica Neue',Arial,sans-serif;--hand:'Patrick Hand SC','Comic Neue','Chalkboard SE',cursive;--ease:cubic-bezier(0.16, 1, 0.3, 1);color-scheme:dark;} .ds-rail{background:var(--shell);width:80px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 0;} .ds-logo{font:800 16px/1 var(--head);letter-spacing:.08em;color:#fff;margin-bottom:18px;} .ds-nav{display:flex;flex-direction:column;align-items:center;gap:5px;width:66px;padding:8px 0;border-radius:12px;color:var(--text-2);background:transparent;border:0;font:600 11.5px var(--head);cursor:pointer;} .ds-nav b{font:800 17px/1 var(--head);width:36px;height:36px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--line-2);color:var(--text);} .ds-nav:hover{background:#1f2550;color:var(--text);} .ds-cur{color:#fff;} .ds-cur b{background:var(--violet-tint);border-color:var(--violet);box-shadow:0 0 18px rgba(142,81,255,0.45);}"
+    },
+    {
+      "name": "Chips",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Pill chips; good is violet tint, bad is coral tint.",
+      "html": "<div class=\"ds-wrap\"><span class=\"ds-chip\">12 words</span> <span class=\"ds-chip ds-good\">lands 1.8 s</span> <span class=\"ds-chip ds-bad\">after the drop</span></div>",
+      "css": ":host{--bg:#080410;--shell:#141833;--surface:#0f0c1a;--surface-2:#17132a;--surface-3:#221d3a;--line:#2b2742;--line-2:#3d3760;--text:#f4f2fb;--text-2:#b9b4cc;--text-3:#8b85a1;--violet:#8e51ff;--lilac:#a684ff;--violet-tint:#1e1640;--cap:#1c1838;--drop:#ff6b5e;--drop-text:#ff9188;--drop-tint:rgba(255,107,94,0.16);--head:'Archivo','Helvetica Neue',Arial,sans-serif;--body:'Public Sans','Helvetica Neue',Arial,sans-serif;--hand:'Patrick Hand SC','Comic Neue','Chalkboard SE',cursive;--ease:cubic-bezier(0.16, 1, 0.3, 1);color-scheme:dark;} .ds-wrap{background:var(--bg);padding:16px;display:flex;gap:5px;} .ds-chip{display:inline-flex;font:500 12px var(--body);padding:2px 9px;border:1px solid var(--line-2);border-radius:999px;color:var(--text-2);background:var(--surface);} .ds-good{background:var(--violet-tint);color:#fff;border-color:rgba(142,81,255,0.6);} .ds-bad{background:var(--drop-tint);color:var(--drop-text);border-color:rgba(255,107,94,0.55);}"
+    },
+    {
+      "name": "Working Panel",
+      "kind": "card",
+      "refersTo": "container-panel",
+      "description": "Rounded 16px container with a violet top rim.",
+      "html": "<div class=\"ds-wrap\"><section class=\"ds-panel\"><h2>Plan 10 takes</h2><p>Type one idea and let Claude plan the takes.</p></section></div>",
+      "css": ":host{--bg:#080410;--shell:#141833;--surface:#0f0c1a;--surface-2:#17132a;--surface-3:#221d3a;--line:#2b2742;--line-2:#3d3760;--text:#f4f2fb;--text-2:#b9b4cc;--text-3:#8b85a1;--violet:#8e51ff;--lilac:#a684ff;--violet-tint:#1e1640;--cap:#1c1838;--drop:#ff6b5e;--drop-text:#ff9188;--drop-tint:rgba(255,107,94,0.16);--head:'Archivo','Helvetica Neue',Arial,sans-serif;--body:'Public Sans','Helvetica Neue',Arial,sans-serif;--hand:'Patrick Hand SC','Comic Neue','Chalkboard SE',cursive;--ease:cubic-bezier(0.16, 1, 0.3, 1);color-scheme:dark;} .ds-wrap{background:var(--bg);padding:16px;} .ds-panel{border:1px solid var(--line);border-top-color:rgba(142,81,255,0.6);background:var(--surface);padding:18px;border-radius:16px;display:flex;flex-direction:column;gap:12px;color:var(--text);font:400 14px/1.5 var(--body);} .ds-panel h2{margin:0;font:700 16px var(--head);letter-spacing:-.01em;color:#fff;} .ds-panel p{margin:0;}"
+    },
+    {
+      "name": "Beat Panel with Balloon",
+      "kind": "custom",
+      "refersTo": "beat-panel",
+      "description": "Square-framed beat panel with halftone frame, hand caption and white speech balloon.",
+      "html": "<div class=\"ds-wrap\"><div class=\"ds-balloon\">left at 0:02</div><button class=\"ds-pn ds-now\"><div class=\"ds-fr\"></div><div class=\"ds-cap\"><i>B1 · 0:00–0:05</i>What if it rained only on you?</div></button></div>",
+      "css": ":host{--bg:#080410;--shell:#141833;--surface:#0f0c1a;--surface-2:#17132a;--surface-3:#221d3a;--line:#2b2742;--line-2:#3d3760;--text:#f4f2fb;--text-2:#b9b4cc;--text-3:#8b85a1;--violet:#8e51ff;--lilac:#a684ff;--violet-tint:#1e1640;--cap:#1c1838;--drop:#ff6b5e;--drop-text:#ff9188;--drop-tint:rgba(255,107,94,0.16);--head:'Archivo','Helvetica Neue',Arial,sans-serif;--body:'Public Sans','Helvetica Neue',Arial,sans-serif;--hand:'Patrick Hand SC','Comic Neue','Chalkboard SE',cursive;--ease:cubic-bezier(0.16, 1, 0.3, 1);color-scheme:dark;} .ds-wrap{background:var(--bg);padding:52px 16px 16px;position:relative;width:220px;} .ds-pn{width:100%;border:1.5px solid var(--line-2);background:var(--surface);display:flex;flex-direction:column;border-radius:0;padding:0;cursor:pointer;transition:transform .25s var(--ease),border-color .2s;} .ds-pn:hover{transform:translateY(-2px);border-color:var(--text-3);} .ds-now{border-color:var(--lilac);box-shadow:0 0 0 1px var(--lilac),0 0 16px rgba(166,132,255,0.35);} .ds-fr{height:124px;border-bottom:1.5px solid var(--line-2);position:relative;background:linear-gradient(135deg,#2a2550,#17132a);} .ds-fr::after{content:'';position:absolute;inset:0;background:radial-gradient(rgba(8,4,16,0.35) .9px,transparent 1.3px) 0 0/4px 4px;} .ds-cap{padding:5px 8px 7px;font:400 15px/1.15 var(--hand);background:var(--cap);color:var(--text);text-align:left;} .ds-cap i{display:block;font:600 11px var(--head);font-style:normal;color:var(--lilac);margin-bottom:2px;} .ds-balloon{position:absolute;top:8px;left:16px;padding:7px 16px 6px;background:#fff;color:#120d22;border:1.5px solid #120d22;border-radius:50%/50%;font:400 18px/1 var(--hand);white-space:nowrap;} .ds-balloon::after{content:'';position:absolute;left:22px;bottom:-9px;width:14px;height:14px;background:#fff;border-right:1.5px solid #120d22;border-bottom:1.5px solid #120d22;transform:skewX(30deg) rotate(45deg);}"
+    },
+    {
+      "name": "Stepper Guide",
+      "kind": "custom",
+      "refersTo": "stepper-step-now",
+      "description": "Numbered pill steps; current glows violet; one sentence on what to do.",
+      "html": "<section class=\"ds-stepper\"><ol><li class=\"ds-done\"><span class=\"ds-n\">1</span>Find the drop</li><li class=\"ds-cur\"><span class=\"ds-n\">2</span>Rewrite the hook</li><li><span class=\"ds-n\">3</span>Preview</li></ol><p>Pick a rewrite, then press Preview new hook.</p></section>",
+      "css": ":host{--bg:#080410;--shell:#141833;--surface:#0f0c1a;--surface-2:#17132a;--surface-3:#221d3a;--line:#2b2742;--line-2:#3d3760;--text:#f4f2fb;--text-2:#b9b4cc;--text-3:#8b85a1;--violet:#8e51ff;--lilac:#a684ff;--violet-tint:#1e1640;--cap:#1c1838;--drop:#ff6b5e;--drop-text:#ff9188;--drop-tint:rgba(255,107,94,0.16);--head:'Archivo','Helvetica Neue',Arial,sans-serif;--body:'Public Sans','Helvetica Neue',Arial,sans-serif;--hand:'Patrick Hand SC','Comic Neue','Chalkboard SE',cursive;--ease:cubic-bezier(0.16, 1, 0.3, 1);color-scheme:dark;} .ds-stepper{border:1px solid var(--line);border-top-color:rgba(142,81,255,0.6);background:linear-gradient(180deg,#121530,var(--surface));border-radius:16px;display:grid;gap:8px 20px;padding:12px 16px;} .ds-stepper ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;} .ds-stepper li{display:inline-flex;align-items:center;gap:7px;font:600 12.5px var(--head);color:var(--text-3);padding:4px 12px 4px 4px;border-radius:999px;border:1px solid transparent;} .ds-n{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:1px solid currentColor;font:700 12px var(--head);} .ds-done{color:var(--lilac)!important;} .ds-cur{color:#fff!important;background:var(--violet-tint);border-color:rgba(142,81,255,0.6)!important;box-shadow:0 0 18px rgba(142,81,255,0.25);} .ds-cur .ds-n{background:var(--violet);border-color:var(--violet);} .ds-stepper p{margin:0;font:400 14px/1.5 var(--body);color:var(--text);}"
+    },
+    {
+      "name": "Howto Line",
+      "kind": "custom",
+      "refersTo": "howto",
+      "description": "Violet-tint guidance line at the top of a form.",
+      "html": "<div class=\"ds-wrap\"><p class=\"ds-howto\"><b>What to do:</b> type one idea, press <b>Plan 10 takes with Claude</b>.</p></div>",
+      "css": ":host{--bg:#080410;--shell:#141833;--surface:#0f0c1a;--surface-2:#17132a;--surface-3:#221d3a;--line:#2b2742;--line-2:#3d3760;--text:#f4f2fb;--text-2:#b9b4cc;--text-3:#8b85a1;--violet:#8e51ff;--lilac:#a684ff;--violet-tint:#1e1640;--cap:#1c1838;--drop:#ff6b5e;--drop-text:#ff9188;--drop-tint:rgba(255,107,94,0.16);--head:'Archivo','Helvetica Neue',Arial,sans-serif;--body:'Public Sans','Helvetica Neue',Arial,sans-serif;--hand:'Patrick Hand SC','Comic Neue','Chalkboard SE',cursive;--ease:cubic-bezier(0.16, 1, 0.3, 1);color-scheme:dark;} .ds-wrap{background:var(--bg);padding:16px;} .ds-howto{margin:0;font:400 14px/1.5 var(--body);color:var(--text);background:var(--violet-tint);border:1px solid rgba(142,81,255,0.45);padding:8px 12px;border-radius:12px;} .ds-howto b{font-family:var(--head);color:#fff;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Komiks Weekly, night edition",
+    "overview": "A posted reel is read as a komiks strip. Every beat is a panel cut from the real video, framed square in a hairline violet-grey keyline, captioned in a hand-lettered face, and the panel where viewers left gets a white speech balloon. Underneath runs the retention curve on the same time axis, filled with violet halftone dots so the drop reads as a cliff in print. The product is BEAT: Brief, Explore, Arrange, Track, and the rail carries those four letters.\n\nThe night edition sets the temperature, taken from the user's reference (paralleldistribution.com/careers): a near-black violet ground, a deep navy shell for the rail and top bar, violet and lilac as the only accent, with a soft violet glow marking whatever is selected or current. Controls are pills; the one primary action is a white pill. The page declares `color-scheme: dark`. The komiks grammar lives in the content (panels, halftone, balloons, hand captions), while the working chrome around it stays quiet and rounded.\n\nDensity is a working-desk density: 14px body, 4 to 28px spacing, tabular numerals wherever numbers sit. Motion is small and eased on one curve (balloons and result panels pop in, panels lift 2px on hover, the guide cue breathes) and drops to near zero under reduced motion.",
+    "keyCharacteristics": [
+      "Near-black violet ground, deep navy shell, violet and lilac accent with a soft violet glow on selection.",
+      "Pill controls and a white primary pill; rounded 12 to 16px working containers.",
+      "Square-framed story containers (beat panels, takes, board cards, player) with real frame grabs under a halftone overlay.",
+      "White speech balloons in Patrick Hand SC; hand-lettered captions in violet-dark caption boxes.",
+      "Coral only for the drop, blocked checks and \"after the drop\".",
+      "Self-hosted fonts via @fontsource; nothing loads off-site."
+    ],
+    "rules": [
+      {
+        "name": "The One Coral Rule",
+        "body": "Coral means exactly three things: the drop, a blocked or failed check, and \"after the drop\". Nothing else is ever coral: not emphasis, not decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Glow Means Chosen Rule",
+        "body": "A violet glow marks the one thing that is current or selected (option, step, nav letter, now panel, drop target). If two things glow in the same group, one is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Data Has A Source Rule",
+        "body": "Reported points are solid dots; estimates between them are dashed; a full imported export is a solid line. The legend names which is which and where the numbers came from.",
+        "section": "colors"
+      },
+      {
+        "name": "The Hand Speaks Only In The Strip Rule",
+        "body": "Patrick Hand SC is for captions, balloons and hook quotes. Never for buttons, labels, numbers or chrome.",
+        "section": "typography"
+      },
+      {
+        "name": "The Two Clocks Rule",
+        "body": "Positions on the reel (beat ranges, the drop, playhead, axis ticks) are m:ss, floored like a timecode. Durations and measured times are seconds with one decimal and a spaced unit (\"5.4 s\").",
+        "section": "typography"
+      },
+      {
+        "name": "The Glow Not Lift Rule",
+        "body": "Nothing rises on a drop shadow. A surface separates by tone and hairline; a chosen thing separates by violet glow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do frame every story container (panel, take, card, player) square in a 1.5px `line-2` keyline.",
+      "Do use real frame grabs inside beat panels, under the halftone overlay.",
+      "Do round working chrome: pills for controls, 10 to 16px for fields and containers.",
+      "Do make the one primary action a white pill.",
+      "Do mark the current or selected thing with violet tint and a soft violet glow.",
+      "Do keep coral for the drop, blocked or failed checks and \"after the drop\" only.",
+      "Do draw reported points as dots, estimates as dashed lines, and name the source of every number.",
+      "Do write positions as m:ss and durations as one-decimal seconds (\"5.4 s\").",
+      "Do self-host every font through @fontsource."
+    ],
+    "donts": [
+      "Don't use coral for emphasis or decoration.",
+      "Don't set Patrick Hand SC on controls, labels, numbers or chrome.",
+      "Don't lift surfaces with drop shadows; use tone, hairlines and glow.",
+      "Don't round story containers; rounding belongs to chrome.",
+      "Don't add a second accent hue beside violet and lilac.",
+      "Don't draw a retention curve that was not reported or imported."
+    ]
+  }
+}

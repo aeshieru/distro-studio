@@ -1,0 +1,238 @@
+{
+ "title": "Choose BIDA's visual world",
+ "question": "Each preview is the same screen: the Analyze postmortem (retention over beats, hook rewrite, the ten takes). Pick one, or re-roll.",
+ "options": [
+  {
+   "id": "assigned",
+   "kind": "assigned",
+   "label": "Manila & Cartolina",
+   "kicker": "THE ROLL",
+   "lineage": "the Filipino classroom report on manila paper and cartolina",
+   "thesis": "Every postmortem reads like the report you once taped to the board: the drop circled in red Pentel.",
+   "palette": [
+    "#2F6FE0",
+    "#FAFAF7",
+    "#E6C98A",
+    "#F0509A",
+    "#FFD83D",
+    "#E2231A"
+   ],
+   "materials": [
+    "manila paper sheet",
+    "cartolina color tabs",
+    "Pentel marker ink",
+    "masking tape"
+   ],
+   "viewport": "Cartolina-blue rail (Brief, Ideate, Direct, Analyze); a manila analysis sheet with the retention line marker-drawn over the beat strip and the 0:02 drop circled in red; hook rewrite panel at right; takes T01-T10 along the bottom.",
+   "risk": "Can tip into a school-project costume if the marker touches more than the chart and the circle.",
+   "raised": [
+    {
+     "from": "challenger-specimen",
+     "raise": "The hook under review is set at display scale; every other label stays small, so the eye reads the words first."
+    },
+    {
+     "from": "challenger-crouwel",
+     "raise": "The beat timeline sits on a visible half-second grid that the chart, beats and preview all snap to."
+    },
+    {
+     "from": "challenger-orienteering",
+     "raise": "Pentel red is reserved for the one beat where viewers left; nothing else on screen is red."
+    },
+    {
+     "from": "challenger-doujin",
+     "raise": "Every take carries a code (T01-T10) and the take cards pack edge to edge in whole cells."
+    }
+   ],
+   "html": ".impeccable/mocks/decision/assigned.html"
+  },
+  {
+   "id": "model-pick",
+   "kind": "pick",
+   "label": "Komiks Weekly",
+   "kicker": "IMPECCABLE’S PICK",
+   "lineage": "Liwayway-era Filipino komiks on newsprint",
+   "thesis": "A reel is a komiks strip: every beat is a panel, and the panel where readers stopped gets the balloon.",
+   "palette": [
+    "#EEE8DA",
+    "#141414",
+    "#E4007C",
+    "#009FE3",
+    "#FFE500"
+   ],
+   "materials": [
+    "newsprint",
+    "halftone dots",
+    "four-color offset",
+    "hand-lettered balloons"
+   ],
+   "viewport": "Beats drawn as a five-panel strip across the top with the retention curve in halftone under it; the drop panel flagged; hook rewrite and takes below.",
+   "risk": "The most familiar 'storyboard as comic' idea; panels can crowd a working screen.",
+   "html": ".impeccable/mocks/decision/model-pick.html"
+  },
+  {
+   "id": "challenger-jcard",
+   "kind": "challenger",
+   "catalogId": "vernacular-ephemera-cassette-j-card",
+   "label": "Mixtape J-Card",
+   "verdict": "competitive",
+   "lineage": "hand-ruled cassette inlay tracklists",
+   "thesis": "Each reel is a tape side: beats are tracks with running times that must fit the tape, Side A the original, Side B the rewrite.",
+   "palette": [
+    "#FFFFFF",
+    "#1F3FB0",
+    "#8A8A8A",
+    "#D7262E"
+   ],
+   "materials": [
+    "lined inlay card",
+    "ballpoint blue",
+    "pencil grey"
+   ],
+   "viewport": "Beat tracklist with right-aligned timecodes beside the retention line; a Side A / Side B flip between the original and rewritten hook.",
+   "case": "Strong on clarity (timing budget, before/after flip); weaker on audience identification for 18-34 PH makers.",
+   "risk": "Reads as nostalgia if the ballpoint spreads past the tracklist.",
+   "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-cassette-j-card-hero.webp",
+   "html": ".impeccable/mocks/decision/challenger-jcard.html"
+  },
+  {
+   "id": "challenger-warmapp",
+   "kind": "challenger",
+   "catalogId": "digital-design-canon-warm-consumer-app-surface",
+   "label": "Warm Studio App",
+   "verdict": "competitive",
+   "lineage": "friendly consumer creator apps",
+   "thesis": "Soft cards and plain words; the one bright color is always something you can press.",
+   "palette": [
+    "#FBEDE3",
+    "#FFFFFF",
+    "#2B2320",
+    "#FF5A1F"
+   ],
+   "materials": [
+    "soft radius cards",
+    "tinted ground"
+   ],
+   "viewport": "Single column of cards: retention card, hook card, takes card; tangerine only on actions.",
+   "case": "Holds product clarity; loses on audience identification and distinctiveness.",
+   "risk": "Close to every creator app; little that says BIDA or the Philippines.",
+   "hero": "https://impeccable.style/worlds/cards/digital-design-canon-warm-consumer-app-surface-hero.webp",
+   "html": ".impeccable/mocks/decision/challenger-warmapp.html"
+  },
+  {
+   "id": "challenger-specimen",
+   "kind": "challenger",
+   "catalogId": "variable-font-specimen",
+   "label": "Type Specimen",
+   "verdict": "declined",
+   "lineage": "variable font specimens",
+   "palette": [
+    "#FAFAFA",
+    "#111111",
+    "#FF3B00"
+   ],
+   "materials": [
+    "flat paper",
+    "monospace readouts"
+   ],
+   "thesis": "The hook as a giant specimen.",
+   "viewport": "One giant hook line with axis-like sliders.",
+   "risk": "Makers are not type people.",
+   "case": "Loses both axes: little audience pull, hides the board.",
+   "kept": "Hierarchy by scale alone: the hook at display size."
+  },
+  {
+   "id": "challenger-crouwel",
+   "kind": "challenger",
+   "catalogId": "crouwel-grid-specimen",
+   "label": "Crouwel Grid",
+   "verdict": "declined",
+   "lineage": "Wim Crouwel grid posters",
+   "palette": [
+    "#FFFFFF",
+    "#0047FF",
+    "#E30613"
+   ],
+   "materials": [
+    "construction grid"
+   ],
+   "thesis": "Everything on a visible grid.",
+   "viewport": "Timeline drawn on visible cells.",
+   "risk": "Cold for a creator tool.",
+   "case": "Loses both axes against a local world.",
+   "kept": "A visible half-second grid under the timeline."
+  },
+  {
+   "id": "challenger-orienteering",
+   "kind": "challenger",
+   "catalogId": "notation-diagram-systems-orienteering-map",
+   "label": "Orienteering Map",
+   "verdict": "declined",
+   "lineage": "ISOM orienteering maps",
+   "palette": [
+    "#FFFFFF",
+    "#6F3C1E",
+    "#B5009A",
+    "#F7D117"
+   ],
+   "materials": [
+    "contour lines",
+    "course purple"
+   ],
+   "thesis": "The reel as a course; beats as controls.",
+   "viewport": "Beats as numbered control circles on a course line.",
+   "risk": "Nobody in the audience reads these maps.",
+   "case": "Loses both axes.",
+   "kept": "One ink reserved for the active problem only."
+  },
+  {
+   "id": "challenger-doujin",
+   "kind": "challenger",
+   "catalogId": "pop-culture-shelf-doujin-event-catalog",
+   "label": "Con Catalog",
+   "verdict": "declined",
+   "lineage": "convention circle catalogs",
+   "palette": [
+    "#E9E6DF",
+    "#111111",
+    "#2E7BEA"
+   ],
+   "materials": [
+    "newsprint",
+    "stamp-size thumbnails"
+   ],
+   "thesis": "Takes as a packed, coded thumbnail grid.",
+   "viewport": "Ten takes as coded stamp cells, circled in biro.",
+   "risk": "Too dense for the hero moment.",
+   "case": "Loses both axes to the classroom report.",
+   "kept": "Coded takes packed edge to edge in whole cells."
+  }
+ ],
+ "reroll": {
+  "registers": [
+   "safer",
+   "bolder"
+  ]
+ },
+ "buildPath": {
+  "value": "code"
+ },
+ "canon": true,
+ "canonCard": {
+  "kind": "canon",
+  "label": "The category standard",
+  "thesis": "A clean SaaS board like Linear or OpusClip, executed carefully.",
+  "palette": [
+   "#FFFFFF",
+   "#0F172A",
+   "#4F46E5"
+  ],
+  "materials": [
+   "clean grid",
+   "neutral cards"
+  ],
+  "viewport": "Left nav, chart card, hook card, kanban of takes.",
+  "risk": "Indistinguishable from the competitors the judges have seen.",
+  "html": ".impeccable/mocks/decision/canon.html"
+ },
+ "steer": true
+}
